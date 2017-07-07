@@ -1,0 +1,26 @@
+#!/bin/bash
+clear
+
+pomodoro=$(zenity --entry --title="Timer" --text="Pomodoro (minutes):\n\n Eg: 20 minutes, or 30 minutes.")
+rest=$(zenity --entry --title="Timer" --text="Rest (minutes):\n\n Eg: 10 minutes, or 20 minutes.")
+
+image=$(readlink -f pomodoro.png)
+DISPLAY=:0 notify-send -t 1000 -i $image "New pomodoro starts."
+
+counter=0
+while [ "$((counter >= 10))" -eq 0 ]; do
+
+  paplay pomodoro.ogg
+  DISPLAY=:0 notify-send -t 1000 -i $image "You have ${pomodoro} minute(s) to work. $counter"
+  sleep "${pomodoro}m"
+
+  paplay pomodoro.ogg
+  DISPLAY=:0 notify-send -t 1000 -i $image "You have ${rest} minute(s), Take a rest! $counter"
+  sleep "${rest}m"
+
+  counter=$((counter+1))
+done
+
+now=$(date +"%T")
+paplay pomodoro.ogg
+DISPLAY=:0 notify-send -t 1000 -i $image "Pomodoro ends at $now."
