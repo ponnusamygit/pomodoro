@@ -1,26 +1,34 @@
 #!/bin/bash
 clear
 
-pomodoro=$(zenity --entry --title="Timer" --text="Pomodoro (minutes):\n\n Eg: 20 minutes, or 30 minutes.")
-rest=$(zenity --entry --title="Timer" --text="Rest (minutes):\n\n Eg: 10 minutes, or 20 minutes.")
+pomodoro=$(zenity --entry --title="Pomodoro Timer" --text="Pomodoro (minutes):\n\n Eg: 20 minutes, or 40 minutes.")
+rest=$(zenity --entry --title="Pomodoro Timer" --text="Rest (minutes):\n\n Eg: 5 minutes, or 15 minutes.")
+longbreak=$(zenity --entry --title="Pomodoro Timer" --text="Long Break (minutes):\n\n Eg: 10 minutes, or 30 minutes.")
 
 image=$(readlink -f pomodoro.png)
-DISPLAY=:0 notify-send -t 1000 -i $image "New pomodoro starts."
+DISPLAY=:0 notify-send -t 1000 -i $image "New Pomodoro Time starts."
 
-counter=0
-while [ "$((counter >= 10))" -eq 0 ]; do
+counter=1
+while [ "$((counter >= 11))" -eq 0 ]; do
 
   paplay pomodoro.ogg
-  DISPLAY=:0 notify-send -t 1000 -i $image "You have ${pomodoro} minute(s) to work. $counter"
+  DISPLAY=:0 notify-send -t 1000 -i $image "You have ${pomodoro} minute(s) to work. $counter."
   sleep "${pomodoro}m"
 
   paplay pomodoro.ogg
-  DISPLAY=:0 notify-send -t 1000 -i $image "You have ${rest} minute(s), Take a rest! $counter"
+  DISPLAY=:0 notify-send -t 1000 -i $image "You have ${rest} minute(s), Take a rest! $counter."
   sleep "${rest}m"
+
+  modval = $((counter%4))
+  if [ "$((counter%4))" = "0" ]; then
+    paplay pomodoro.ogg
+    DISPLAY=:0 notify-send -t 1000 -i $image "For long break you have ${rest} minute(s)."
+    sleep "${longbreak}m"
+  fi
 
   counter=$((counter+1))
 done
 
 now=$(date +"%T")
 paplay pomodoro.ogg
-DISPLAY=:0 notify-send -t 1000 -i $image "Pomodoro ends at $now."
+DISPLAY=:0 notify-send -t 1000 -i $image "Pomodoro Timer ends at $now."
