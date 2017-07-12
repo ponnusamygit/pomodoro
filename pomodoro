@@ -19,7 +19,6 @@ while [ "$((counter >= 11))" -eq 0 ]; do
   DISPLAY=:0 notify-send -t 1000 -i $image "You have ${rest} minute(s), Take a rest! $counter."
   sleep "${rest}m"
 
-  modval = $((counter%4))
   if [ "$((counter%4))" = "0" ]; then
     paplay pomodoro.ogg
     DISPLAY=:0 notify-send -t 1000 -i $image "For long break you have ${rest} minute(s)."

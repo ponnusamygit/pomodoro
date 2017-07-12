@@ -8,5 +8,9 @@ Steps to run:
   - git clone
   - cd pomodoro
   - sh pomodoro
-  - There after two dialog boxes will apear to get input for work and rest time.
+  - There after three dialog boxes will apear to get input for work and rest time.
   - Currently, this is iterated for 10 times.
+
+Todo:
+  - Remove 10 iterations
+  - Make it runnable in Background
